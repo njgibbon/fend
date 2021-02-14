@@ -22,3 +22,8 @@ https://golang.org/pkg/path/filepath/#Walk
 * Seperate package from client.
 * GH Action.
 
+```
+fenf
+fenf version
+fenf doc
+```

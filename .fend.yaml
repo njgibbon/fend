@@ -1,0 +1,12 @@
+skip:
+  file: 
+    - test/skip_file.txt
+  folder:
+    - test/skip_folder
+  file_all: 
+    - skip_file_all.txt
+  folder_all:
+    - skip_folder_all
+  extension: 
+    - skip
+    - ignore
