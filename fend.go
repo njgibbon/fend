@@ -80,6 +80,7 @@ func doIt(cfg *Config) {
 	fmt.Println(cfg.Skip.Extension)
 	fmt.Println(cfg.Skip.File)
 	fmt.Println(cfg.Skip.FileAll)
+	fmt.Println(cfg.Skip.Extension[0])
 }
 
 func checkLineEnding(fname string) (bool, error) {
