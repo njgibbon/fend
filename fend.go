@@ -48,6 +48,7 @@ func main() {
             }
             fmt.Println(path, result)
 		}
+        fmt.Println(info.Size())
   		return nil
 	})
 if err != nil {
