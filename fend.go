@@ -31,15 +31,20 @@ func main() {
 
   	//b, err := ioutil.ReadAll(file)
  	//fmt.Print(b)
+    subDirToSkip := ".git"
   	err := filepath.Walk(".",func(path string, info os.FileInfo, err error) error {
   		if err != nil {
 	  		return err
   		}
-		fmt.Println(path, info.Size())
-		if info.IsDir()	{
+		if info.IsDir() && info.Name() == subDirToSkip	{
 			//Skip
+            return filepath.SkipDir
 		} else {
-			checkLineEnding(path)
+            result, err := checkLineEnding(path)
+            if err != nil {
+                return err
+            }
+            fmt.Println(path, result)
 		}
   		return nil
 	})
@@ -50,29 +55,30 @@ if err != nil {
   //readFile(".dotfile")
 }
 
-func checkLineEnding(fname string) {
+func checkLineEnding(fname string) (bool, error) {
+    newLine := "\r\n"
     file, err := os.Open(fname)
     if err != nil {
         panic(err)
     }
     defer file.Close()
-	fmt.Print("a")
-    buf := make([]byte, 14)
+    buf := make([]byte, 2)
     stat, err := os.Stat(fname)
-	//fmt.Print(stat)
-	fmt.Print(stat.Size())
-    start := stat.Size() - 14
+	//fmt.Print(stat.Size())
+    start := stat.Size() - 2
     _, err = file.ReadAt(buf, start)
     if err == nil {
         fmt.Printf("%s\n", buf)
     }
-	fmt.Print("b")
 	fmt.Print(buf)
-	fmt.Printf("%s\n", buf)
-	fmt.Printf("%s\n", buf)
-	fmt.Printf("%s\n", buf)
 	//s := string([]byte{buf})
 	myString := string(buf)
 	fmt.Print(myString)
-	
+    fmt.Print(newLine)
+    b := []byte(newLine)
+    fmt.Print(b)
+    if myString == newLine {
+        return true, nil
+    }
+	return false, nil
 }
