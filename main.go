@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -20,17 +19,17 @@ type FendConfig struct {
 	} `yaml:"skip"`
 }
 
-// NewFendConfig returns a new decoded Config struct using .fend.yaml if it exists
+// newFendConfig returns a new decoded Config struct using .fend.yaml if it exists
 func newFendConfig() (*FendConfig, error) {
 	fendConfig := &FendConfig{}
 	file, err := os.Open(".fend.yaml")
 	if err != nil {
-		return nil, err
+		return fendConfig, err
 	}
 	defer file.Close()
 	d := yaml.NewDecoder(file)
 	if err := d.Decode(&fendConfig); err != nil {
-		return nil, err
+		return fendConfig, err
 	}
 	return fendConfig, nil
 }
@@ -39,14 +38,15 @@ func main() {
 	fendConfig, err := newFendConfig()
 	if err != nil {
 		//Could not load .fend.yaml config file for some reason
+		fmt.Println("Could not load .fend.yaml")
 	}
 	//Decision to always skip the .git dir
 	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, ".git")
 	fmt.Print(fendConfig)
 	doIt(fendConfig)
-	fend(fendConfig)
+	err = fend(fendConfig)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("Could not load .fend.yaml")
 	}
 }
 
@@ -54,7 +54,7 @@ func doIt(cfg *FendConfig) {
 	fmt.Println(cfg.Skip.Extension)
 	fmt.Println(cfg.Skip.File)
 	fmt.Println(cfg.Skip.FileAll)
-	fmt.Println(cfg.Skip.Extension[0])
+	//fmt.Println(cfg.Skip.Extension[0])
 }
 
 func fend(fendConfig *FendConfig) error {
