@@ -19,6 +19,8 @@ import (
 // Failed: 5
 // Passed: 45
 
+// Function for cross-platform path comparison.
+
 // FendConfig is data for Fend Configuration annotated to be pulled from .fend.yaml
 type FendConfig struct {
 	Skip struct {
@@ -46,7 +48,7 @@ func newFendConfig() (*FendConfig, error) {
 }
 
 func main() {
-	fmt.Println("Fend - Check for a newline at the End of Files\n-----")
+	fmt.Println("Fend - Check for Newline at File End\n-----")
 	fendConfig, err := newFendConfig()
 	if err != nil {
 		//Could not load .fend.yaml config file for some reason
@@ -56,7 +58,7 @@ func main() {
 	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, ".git")
 	fmt.Print(fendConfig)
 	doIt(fendConfig)
-	err = fend(fendConfig)
+	err = fend(fendConfig, ".")
 	if err != nil {
 		fmt.Println("Could not load .fend.yaml")
 	}
@@ -69,8 +71,8 @@ func doIt(cfg *FendConfig) {
 	//fmt.Println(cfg.Skip.Extension[0])
 }
 
-func fend(fendConfig *FendConfig) error {
-	err := filepath.Walk(".", func(path string, info os.FileInfo, err error) error {
+func fend(fendConfig *FendConfig, checkDir string) error {
+	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
