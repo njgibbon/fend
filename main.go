@@ -8,6 +8,17 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Constants for .git and .config
+// Vars to use for version command
+
+// Ouput: Path - Fail - Reason
+// Summary: Stats
+// Scanned: 67
+// Skipped_Dirs: 22
+// Skipped Files:
+// Failed: 5
+// Passed: 45
+
 // FendConfig is data for Fend Configuration annotated to be pulled from .fend.yaml
 type FendConfig struct {
 	Skip struct {
