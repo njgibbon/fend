@@ -35,6 +35,7 @@ func newFendConfig() (*FendConfig, error) {
 }
 
 func main() {
+	fmt.Println("Fend - Check for a newline at the End of Files\n-----")
 	fendConfig, err := newFendConfig()
 	if err != nil {
 		//Could not load .fend.yaml config file for some reason
