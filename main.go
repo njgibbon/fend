@@ -8,6 +8,12 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const Version = "dev"
+const Source = "https://github.com/njgibbon/fend"
+const ConfigPath = ".fend.yaml"
+
+var defaultSkipDirAll = []string{".git"}
+
 // Constants for .git and .config
 // Vars to use for version command
 
@@ -25,17 +31,17 @@ import (
 type FendConfig struct {
 	Skip struct {
 		File      []string `yaml:"file"`
-		Folder    []string `yaml:"folder"`
+		Dir       []string `yaml:"dir"`
 		FileAll   []string `yaml:"file_all"`
-		FolderAll []string `yaml:"folder_all"`
+		DirAll    []string `yaml:"dir_all"`
 		Extension []string `yaml:"extension"`
 	} `yaml:"skip"`
 }
 
-// newFendConfig returns a new decoded Config struct using .fend.yaml if it exists
-func newFendConfig() (*FendConfig, error) {
+// newFendConfig returns a new decoded FendConfig struct using Config File if exists
+func newFendConfig(configPath string) (*FendConfig, error) {
 	fendConfig := &FendConfig{}
-	file, err := os.Open(".fend.yaml")
+	file, err := os.Open(configPath)
 	if err != nil {
 		return fendConfig, err
 	}
@@ -49,7 +55,7 @@ func newFendConfig() (*FendConfig, error) {
 
 func main() {
 	fmt.Println("Fend - Check for Newline at File End\n-----")
-	fendConfig, err := newFendConfig()
+	fendConfig, err := newFendConfig(ConfigPath)
 	if err != nil {
 		//Could not load .fend.yaml config file for some reason
 		fmt.Println("Could not load .fend.yaml")
@@ -57,21 +63,17 @@ func main() {
 	//Decision to always skip the .git dir
 	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, ".git")
 	fmt.Print(fendConfig)
-	doIt(fendConfig)
 	err = fend(fendConfig, ".")
 	if err != nil {
 		fmt.Println("Could not load .fend.yaml")
 	}
 }
 
-func doIt(cfg *FendConfig) {
-	fmt.Println(cfg.Skip.Extension)
-	fmt.Println(cfg.Skip.File)
-	fmt.Println(cfg.Skip.FileAll)
-	//fmt.Println(cfg.Skip.Extension[0])
-}
-
 func fend(fendConfig *FendConfig, checkDir string) error {
+	fmt.Println(fendConfig.Skip.Extension)
+	fmt.Println(fendConfig.Skip.File)
+	fmt.Println(fendConfig.Skip.FileAll)
+	fmt.Println(defaultSkipDirAll)
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -101,15 +103,15 @@ func fend(fendConfig *FendConfig, checkDir string) error {
 	return nil
 }
 
-func checkLineEnding(fname string) (bool, error) {
+func checkLineEnding(fileName string) (bool, error) {
 	posixNewLine := "\n"
-	file, err := os.Open(fname)
+	file, err := os.Open(fileName)
 	if err != nil {
 		return false, err
 	}
 	defer file.Close()
 	buf := make([]byte, 1)
-	stat, err := os.Stat(fname)
+	stat, err := os.Stat(fileName)
 	start := stat.Size() - 1
 	_, err = file.ReadAt(buf, start)
 	if err != nil {

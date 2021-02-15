@@ -1,12 +1,12 @@
 skip:
   file: 
     - test/skip_file.txt
-  folder:
-    - test/skip_folder
+  dir:
+    - test/skip_dir
   file_all: 
     - skip_file_all.txt
-  folder_all:
-    - skip_folder_all
+  dir_all:
+    - skip_dir_all
   extension: 
     - skip
     - ignore
