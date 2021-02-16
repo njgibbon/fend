@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -8,24 +9,43 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-const Version = "dev"
-const Source = "https://github.com/njgibbon/fend"
-const ConfigPath = ".fend.yaml"
+// Constants for Fend
+const (
+	Version    = "dev"
+	Source     = "https://github.com/njgibbon/fend"
+	ConfigPath = ".fend.yaml"
+)
 
-var defaultSkipDirAll = []string{".git"}
+var (
+	defaultSkipDirAll = []string{".git"}
+)
 
-// Constants for .git and .config
-// Vars to use for version command
-
-// Ouput: Path - Fail - Reason
-// Summary: Stats
-// Scanned: 67
-// Skipped_Dirs: 22
-// Skipped Files:
-// Failed: 5
-// Passed: 45
-
-// Function for cross-platform path comparison.
+func main() {
+	configLoaded := true
+	flag.Parse()
+	if flag.Arg(0) == "version" {
+		fmt.Println(Version)
+		os.Exit(0)
+	}
+	if flag.Arg(0) == "doc" || flag.Arg(0) == "help" {
+		fmt.Println(Source)
+		os.Exit(0)
+	}
+	fendConfig, err := newFendConfig(ConfigPath)
+	if err != nil {
+		configLoaded = false
+	}
+	fmt.Println("Fend - Check for Newline at File End\n-----")
+	//Decision to always skip the .git dir
+	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, ".git")
+	fmt.Print(fendConfig)
+	err = fend(fendConfig, ".")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	fmt.Println(configLoaded)
+}
 
 // FendConfig is data for Fend Configuration annotated to be pulled from .fend.yaml
 type FendConfig struct {
@@ -51,22 +71,6 @@ func newFendConfig(configPath string) (*FendConfig, error) {
 		return fendConfig, err
 	}
 	return fendConfig, nil
-}
-
-func main() {
-	fmt.Println("Fend - Check for Newline at File End\n-----")
-	fendConfig, err := newFendConfig(ConfigPath)
-	if err != nil {
-		//Could not load .fend.yaml config file for some reason
-		fmt.Println("Could not load .fend.yaml")
-	}
-	//Decision to always skip the .git dir
-	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, ".git")
-	fmt.Print(fendConfig)
-	err = fend(fendConfig, ".")
-	if err != nil {
-		fmt.Println("Could not load .fend.yaml")
-	}
 }
 
 func fend(fendConfig *FendConfig, checkDir string) error {
