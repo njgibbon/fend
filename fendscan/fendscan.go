@@ -1,4 +1,4 @@
-package fend
+package fendscan
 
 import (
 	"fmt"
@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 )
 
-// Fend will scan a given directory for none newline File Endings and return some stats
+// FendScan will scan a given directory for none newline File Endings and return some stats
 // It will take into account the skip configurations passed in
-func Fend(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, error) {
+func FendScan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, error) {
 	passed := 0
 	failed := 0
 	skippedFiles := 0
