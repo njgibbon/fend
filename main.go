@@ -42,11 +42,17 @@ func main() {
 	fendConfig.Skip.DirAll = append(fendConfig.Skip.DirAll, defaultSkipDirAll...)
 	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, defaultSkipFileAll...)
 	//fmt.Print(fendConfig)
-	err = fend(fendConfig, ".")
+	passed, failed, skippedDirs, skippedFiles, errors, err := fend(fendConfig, ".")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	fmt.Println("-----\nResults\n-----")
+	fmt.Println("Passed:", passed)
+	fmt.Println("Failed:", failed)
+	fmt.Println("Skipped Dirs:", skippedDirs)
+	fmt.Println("Skipped Files:", skippedFiles)
+	fmt.Println("Errors:", errors)
 }
 
 // FendConfig is data for Fend Configuration annotated to be pulled from .fend.yaml
@@ -75,7 +81,7 @@ func newFendConfig(configPath string) (*FendConfig, error) {
 	return fendConfig, nil
 }
 
-func fend(fendConfig *FendConfig, checkDir string) error {
+func fend(fendConfig *FendConfig, checkDir string) (int, int, int, int, int, error) {
 	passed := 0
 	failed := 0
 	skippedFiles := 0
@@ -135,15 +141,9 @@ func fend(fendConfig *FendConfig, checkDir string) error {
 		return nil
 	})
 	if err != nil {
-		return err
+		return passed, failed, skippedDirs, skippedFiles, errors, err
 	}
-	fmt.Println("-----\nResults\n-----")
-	fmt.Println("Passed:", passed)
-	fmt.Println("Failed:", failed)
-	fmt.Println("Skipped Dirs:", skippedDirs)
-	fmt.Println("Skipped Files:", skippedFiles)
-	fmt.Println("Errors:", errors)
-	return nil
+	return passed, failed, skippedDirs, skippedFiles, errors, nil
 }
 
 func checkLineEnding(fileName string) (bool, error) {
