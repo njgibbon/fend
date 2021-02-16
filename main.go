@@ -35,16 +35,16 @@ func main() {
 	if err != nil {
 		configLoaded = false
 	}
-	fmt.Println("Fend - Check for Newline at File End\n-----")
-	//Decision to always skip the .git dir
-	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, ".git")
+	fmt.Println("Fend - Check for Newline at File End\n-----\nConfig Loaded:", configLoaded,
+		"\n-----\nScan - Files Failed\n-----")
+	//Append default skip dir list to config list
+	fendConfig.Skip.DirAll = append(fendConfig.Skip.DirAll, defaultSkipDirAll...)
 	fmt.Print(fendConfig)
 	err = fend(fendConfig, ".")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	fmt.Println(configLoaded)
 }
 
 // FendConfig is data for Fend Configuration annotated to be pulled from .fend.yaml
@@ -78,6 +78,7 @@ func fend(fendConfig *FendConfig, checkDir string) error {
 	fmt.Println(fendConfig.Skip.File)
 	fmt.Println(fendConfig.Skip.FileAll)
 	fmt.Println(defaultSkipDirAll)
+	fmt.Println(fendConfig.Skip.DirAll)
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
