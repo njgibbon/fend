@@ -17,7 +17,8 @@ const (
 )
 
 var (
-	defaultSkipDirAll = []string{".git"}
+	defaultSkipDirAll  = []string{".git"}
+	defaultSkipFileAll = []string{"."}
 )
 
 func main() {
@@ -37,8 +38,9 @@ func main() {
 	}
 	fmt.Println("Fend - Check for Newline at File End\n-----\nConfig Loaded:", configLoaded,
 		"\n-----\nScan - Files Failed\n-----")
-	//Append default skip dir list to config list
+	//Append default skip list to config list
 	fendConfig.Skip.DirAll = append(fendConfig.Skip.DirAll, defaultSkipDirAll...)
+	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, defaultSkipFileAll...)
 	fmt.Print(fendConfig)
 	err = fend(fendConfig, ".")
 	if err != nil {
@@ -74,37 +76,72 @@ func newFendConfig(configPath string) (*FendConfig, error) {
 }
 
 func fend(fendConfig *FendConfig, checkDir string) error {
-	fmt.Println(fendConfig.Skip.Extension)
-	fmt.Println(fendConfig.Skip.File)
-	fmt.Println(fendConfig.Skip.FileAll)
-	fmt.Println(defaultSkipDirAll)
-	fmt.Println(fendConfig.Skip.DirAll)
+	passed := 0
+	failed := 0
+	skippedFiles := 0
+	skippedDirs := 0
+	errors := 0
+
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
+			errors++
 			return err
 		}
-		//Main logic of whether to check
-		if info.IsDir() && (info.Name() == ".git") {
-			fmt.Println(path, "Skip .git")
+		fileName := info.Name()
+		fileExtension := filepath.Ext(fileName)
+		fmt.Println(fileExtension)
+		normalisedPath := filepath.ToSlash(path)
+		pathInSkipDir := contains(fendConfig.Skip.Dir, normalisedPath)
+		pathInSkipFile := contains(fendConfig.Skip.File, normalisedPath)
+		nameInSkipDirAll := contains(fendConfig.Skip.DirAll, fileName)
+		nameInSkipFileAll := contains(fendConfig.Skip.FileAll, fileName)
+		fileExtInSkipExt := contains(fendConfig.Skip.Extension, fileExtension)
+		if info.IsDir() && (nameInSkipDirAll == true) {
+			fmt.Println(normalisedPath, "Skip - SkipDirAll")
+			skippedDirs++
 			return filepath.SkipDir
-		} else if info.Name() == "." {
-			fmt.Println(path, ". NA")
+		} else if info.IsDir() && (pathInSkipDir == true) {
+			fmt.Println(normalisedPath, "Skip - SkipDir !!!!!!!!!!!!!!!!!!!!!!!!!")
+			skippedDirs++
+			return filepath.SkipDir
+		} else if nameInSkipFileAll == true {
+			fmt.Println(normalisedPath, "Skip - SkipFileAll")
+			skippedFiles++
 		} else if info.IsDir() {
-			fmt.Println(path, "Dir NA")
+			fmt.Println(normalisedPath, "Dir NA")
+			//Move on, can't process folder but nothing special to do
 		} else if info.Size() == 0 {
-			fmt.Println(path, "Size 0 - False")
+			fmt.Println(normalisedPath, "Size 0 - False")
+			failed++
+		} else if pathInSkipFile == true {
+			fmt.Println(normalisedPath, "Skip - SkipFile")
+			skippedFiles++
+		} else if fileExtInSkipExt == true {
+			fmt.Println(normalisedPath, "Skip - Extension")
+			skippedFiles++
 		} else {
 			result, err := checkLineEnding(path)
 			if err != nil {
+				errors++
 				return err
 			}
-			fmt.Println(path, result)
+			if result == true {
+				passed++
+			} else {
+				failed++
+			}
+			fmt.Println(normalisedPath, result)
 		}
 		return nil
 	})
 	if err != nil {
 		return err
 	}
+	fmt.Println("Passed:", passed)
+	fmt.Println("Failed:", failed)
+	fmt.Println("Skipped Dirs:", skippedDirs)
+	fmt.Println("Skipped Files:", skippedFiles)
+	fmt.Println("Errors:", errors)
 	return nil
 }
 
@@ -127,4 +164,13 @@ func checkLineEnding(fileName string) (bool, error) {
 		return true, nil
 	}
 	return false, nil
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }
