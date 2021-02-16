@@ -14,8 +14,7 @@ https://golang.org/pkg/path/filepath/#Walk
 * Refine: File all instances ignore
 * Refine: File includes string ignore
 * Refine: File prefix / postfix ignore
-* err vs panic
-* Debug Logs
+* Debug Logs - Future feature
 * Tests
 * User output positive negative.
 * Docs
@@ -27,3 +26,12 @@ fenf
 fenf version
 fenf doc
 ```
+// Ouput: Path - Fail - Reason
+// Summary: Stats
+// Scanned: 67
+// Skipped_Dirs: 22
+// Skipped Files:
+// Failed: 5
+// Passed: 45
+
+// Function for cross-platform path comparison if needed.
