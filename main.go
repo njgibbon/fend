@@ -42,7 +42,8 @@ func main() {
 	fendConfig.Skip.DirAll = append(fendConfig.Skip.DirAll, defaultSkipDirAll...)
 	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, defaultSkipFileAll...)
 	//fmt.Print(fendConfig)
-	passed, failed, skippedDirs, skippedFiles, errors, err := fend(fendConfig, ".")
+	passed, failed, skippedDirs, skippedFiles, errors, err :=
+		fend(fendConfig.Skip.File, fendConfig.Skip.FileAll, fendConfig.Skip.Dir, fendConfig.Skip.DirAll, fendConfig.Skip.Extension, ".")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -81,7 +82,7 @@ func newFendConfig(configPath string) (*FendConfig, error) {
 	return fendConfig, nil
 }
 
-func fend(fendConfig *FendConfig, checkDir string) (int, int, int, int, int, error) {
+func fend(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, error) {
 	passed := 0
 	failed := 0
 	skippedFiles := 0
@@ -97,11 +98,11 @@ func fend(fendConfig *FendConfig, checkDir string) (int, int, int, int, int, err
 		fileExtension := filepath.Ext(fileName)
 		//fmt.Println(fileExtension)
 		normalisedPath := filepath.ToSlash(path)
-		pathInSkipDir := contains(fendConfig.Skip.Dir, normalisedPath)
-		pathInSkipFile := contains(fendConfig.Skip.File, normalisedPath)
-		nameInSkipDirAll := contains(fendConfig.Skip.DirAll, fileName)
-		nameInSkipFileAll := contains(fendConfig.Skip.FileAll, fileName)
-		fileExtInSkipExt := contains(fendConfig.Skip.Extension, fileExtension)
+		pathInSkipDir := contains(skipDir, normalisedPath)
+		pathInSkipFile := contains(skipFile, normalisedPath)
+		nameInSkipDirAll := contains(skipDirAll, fileName)
+		nameInSkipFileAll := contains(skipFileAll, fileName)
+		fileExtInSkipExt := contains(skipExtension, fileExtension)
 		if info.IsDir() && (nameInSkipDirAll == true) {
 			//fmt.Println(normalisedPath, "Skip - SkipDirAll")
 			skippedDirs++
@@ -167,6 +168,8 @@ func checkLineEnding(fileName string) (bool, error) {
 	return false, nil
 }
 
+// contains is a helper function
+// Does a slice contain this string?
 func contains(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
