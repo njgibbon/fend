@@ -1,4 +1,4 @@
-package fendscan
+package fend
 
 import (
 	"fmt"
