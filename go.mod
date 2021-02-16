@@ -1,4 +1,4 @@
-module fend
+module github.com/njgibbon/fend
 
 go 1.15
 
