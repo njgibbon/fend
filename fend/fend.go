@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-// FendScan will scan a given directory for none newline File Endings and return some stats
+// Scan will scan a given directory for none newline File Endings and return some stats
 // It will take into account the skip configurations passed in
 func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, error) {
 	passed := 0

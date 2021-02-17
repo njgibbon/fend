@@ -1,10 +1,10 @@
 skip:
   file: 
-    - test/data-0/skip_file.txt
+    - skip_file.txt
   file_all: 
     - skip_file_all.txt
   dir:
-    - test/data-0/skip-dir
+    - skip-dir
   dir_all:
     - skip-dir-all
   extension: 
