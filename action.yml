@@ -1,6 +1,6 @@
-name: "Fend"
-description: "Check for Newline at File End"
-author: "Nick Gibbon"
+name: 'Fend'
+description: 'Check for Newline at File End'
+author: 'Nick Gibbon'
 runs:
-using: "docker"
-image: "Dockerfile"
+  using: 'docker'
+  image: 'Dockerfile'
