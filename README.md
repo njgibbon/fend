@@ -10,3 +10,5 @@ Check for Newline at File End
 * Release binary and test install.
 * GH Action to run unit tests.
 * GH Action for this in other repo.
+* Go lint and go fmt in action too.
+* contributing and release doc.
