@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - uses: actions/setup-go@v2
-    - run: gofmt -l .
+    - run: gofmt -l -d .
 
   go-test:
     runs-on: ubuntu-latest
