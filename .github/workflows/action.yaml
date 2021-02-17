@@ -8,6 +8,13 @@ jobs:
     - uses: actions/setup-go@v2
     - run: go version
 
+  go-fmt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-go@v2
+    - run: gofmt -l .
+
   go-test:
     runs-on: ubuntu-latest
     steps:
