@@ -16,8 +16,8 @@ jobs:
     - run: ls
     - run: go get -u golang.org/x/lint/golint
     - run: gofmt -l -d .
-    - run: go vet .
-    - run: go lint .
+    - run: go vet ./...
+    - run: golint ./...
 
   go-test:
     runs-on: ubuntu-latest
