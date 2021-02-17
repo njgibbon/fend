@@ -54,6 +54,9 @@ func main() {
 	fmt.Println("Skipped Dirs:", skippedDirs)
 	fmt.Println("Skipped Files:", skippedFiles)
 	fmt.Println("Errors:", errors)
+	if failed != 0 {
+		os.Exit(1)
+	}
 }
 
 // FendConfig is data for Fend Configuration annotated to be pulled from .fend.yaml
