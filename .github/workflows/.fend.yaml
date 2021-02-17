@@ -1,0 +1,13 @@
+skip:
+  file: 
+    - skip_file.txt
+  file_all: 
+    - skip_file_all.txt
+  dir:
+    - skip-dir
+  dir_all:
+    - skip-dir-all
+    - test
+  extension: 
+    - .skip
+    - .ignore
