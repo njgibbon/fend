@@ -1,0 +1,21 @@
+name: Action
+on: [push]
+jobs:
+
+  go-version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-go@v2
+    - run: go version
+
+  go-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-go@v2
+    - run: go test ./...
+
+  go-run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-go@v2
+    - run: go run .
