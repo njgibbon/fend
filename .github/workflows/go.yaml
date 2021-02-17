@@ -1,7 +1,8 @@
 name: Go
-on: [push]
-jobs:
 
+on: [push]
+
+jobs:
   go-fmt:
     runs-on: ubuntu-latest
     steps:
