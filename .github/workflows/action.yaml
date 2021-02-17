@@ -11,11 +11,13 @@ jobs:
   go-test:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@master
     - uses: actions/setup-go@v2
     - run: go test ./...
 
   go-run:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@master
     - uses: actions/setup-go@v2
     - run: go run .
