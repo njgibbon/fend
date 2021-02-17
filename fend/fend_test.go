@@ -20,7 +20,7 @@ func TestScan(t *testing.T) {
 		t.Errorf("Not expecting Error.")
 	} else {
 		fmt.Println(passed, failed, skippedDirs, skippedFiles, errors)
-		if passed != 5 {
+		if passed != 4 {
 			t.Errorf("Passed: Expected 5.")
 		}
 
