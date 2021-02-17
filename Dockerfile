@@ -8,5 +8,6 @@ RUN CGO_ENABLED=0 go build -ldflags="-w -s" -v -o fend .
 
 FROM scratch
 COPY --from=builder /build/fend /bin/fend
+RUN chmod +x /bin/fend
 WORKDIR /fend
 ENTRYPOINT ["/bin/fend"]
