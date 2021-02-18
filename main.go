@@ -16,11 +16,6 @@ const (
 	ConfigPath = ".fend.yaml"
 )
 
-var (
-	defaultSkipDirAll  = []string{".git"}
-	defaultSkipFileAll = []string{"."}
-)
-
 func main() {
 	configLoaded := true
 	flag.Parse()
@@ -32,18 +27,14 @@ func main() {
 		fmt.Println(Source)
 		os.Exit(0)
 	}
-	fendConfig, err := newFendConfig(ConfigPath)
+	cfg, err := newConfig(ConfigPath)
 	if err != nil {
 		configLoaded = false
 	}
 	fmt.Println("Fend - Check for Newline at File End\n-----\nConfig Loaded:", configLoaded,
-		"\n-----\nScan - Files Failed\n-----")
-	//Append default skip list to config list
-	fendConfig.Skip.DirAll = append(fendConfig.Skip.DirAll, defaultSkipDirAll...)
-	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, defaultSkipFileAll...)
-	//fmt.Print(fendConfig)
+		"\n-----\nScan\n-----")
 	passed, failed, skippedDirs, skippedFiles, errors, err :=
-		scanner.Scan(fendConfig.Skip.File, fendConfig.Skip.FileAll, fendConfig.Skip.Dir, fendConfig.Skip.DirAll, fendConfig.Skip.Extension, ".")
+		scanner.Scan(cfg.Skip.File, cfg.Skip.FileAll, cfg.Skip.Dir, cfg.Skip.DirAll, cfg.Skip.Extension, ".")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -59,8 +50,8 @@ func main() {
 	}
 }
 
-// FendConfig is data for Fend Configuration annotated to be pulled from .fend.yaml
-type FendConfig struct {
+// Config is data for Fend Configuration annotated to be pulled from .fend.yaml
+type Config struct {
 	Skip struct {
 		File      []string `yaml:"file"`
 		Dir       []string `yaml:"dir"`
@@ -70,17 +61,17 @@ type FendConfig struct {
 	} `yaml:"skip"`
 }
 
-// newFendConfig returns a new decoded FendConfig struct using Config File if exists
-func newFendConfig(configPath string) (*FendConfig, error) {
-	fendConfig := &FendConfig{}
+// newConfig returns a new decoded Config struct using Config File if exists
+func newConfig(configPath string) (*Config, error) {
+	cfg := &Config{}
 	file, err := os.Open(configPath)
 	if err != nil {
-		return fendConfig, err
+		return cfg, err
 	}
 	defer file.Close()
 	d := yaml.NewDecoder(file)
-	if err := d.Decode(&fendConfig); err != nil {
-		return fendConfig, err
+	if err := d.Decode(&cfg); err != nil {
+		return cfg, err
 	}
-	return fendConfig, nil
+	return cfg, nil
 }

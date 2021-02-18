@@ -20,16 +20,20 @@ func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll 
 			errors++
 			return err
 		}
-		fileName := info.Name()
-		fileExtension := filepath.Ext(fileName)
+		objName := info.Name()
+		fileExtension := filepath.Ext(objName)
 		//fmt.Println(fileExtension)
 		normalisedPath := filepath.ToSlash(path)
 		pathInSkipDir := contains(skipDir, normalisedPath)
 		pathInSkipFile := contains(skipFile, normalisedPath)
-		nameInSkipDirAll := contains(skipDirAll, fileName)
-		nameInSkipFileAll := contains(skipFileAll, fileName)
+		nameInSkipDirAll := contains(skipDirAll, objName)
+		nameInSkipFileAll := contains(skipFileAll, objName)
 		fileExtInSkipExt := contains(skipExtension, fileExtension)
-		if info.IsDir() && (nameInSkipDirAll == true) {
+		if objName == ".git" {
+			return filepath.SkipDir
+		} else if objName == "." {
+			//Skip but don't record
+		} else if info.IsDir() && (nameInSkipDirAll == true) {
 			//fmt.Println(normalisedPath, "Skip - SkipDirAll")
 			skippedDirs++
 			return filepath.SkipDir
