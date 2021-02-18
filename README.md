@@ -1,14 +1,24 @@
 # fend
 Check for Newline at File End
 
-# TODO
+# Why might you want to use this?
+https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newline
 
-* Debug Logs - Future feature
-* Tests
-* Format strings everywhere for better output
-* Readme docs.
-* Release binary and test install.
-* GH Action to run unit tests.
-* GH Action for this in other repo.
-* Go lint and go fmt in action too.
-* contributing and release doc.
+And it also will stop the little red bit on PRs. Add image.
+
+# TODO
+## Docs
+* Tests doc.
+* Readme docs. release.
+* GH Action release
+## Code
+* Finish basic testing.
+* Better algorithm for different categories.
+* Format strings everywhere
+* Format output inc. errors and edge cases.
+
+# Meta
+Project used as a vehicle to help learn about tool development using golang and also GitHub actions dev.
+
+# Similar tools
+TODO: write nice thing about the other tool I found.
