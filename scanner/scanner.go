@@ -8,21 +8,22 @@ import (
 
 // Scan will scan a given directory for none newline File Endings and return some stats
 // It will take into account the skip configurations passed in
-func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, error) {
+func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, []string, error) {
 	passed := 0
 	failed := 0
 	skippedFiles := 0
 	skippedDirs := 0
 	errors := 0
+	errorPaths := []string{}
 
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			errors++
+			//TODO: Add to errorPaths slice
 			return err
 		}
 		objName := info.Name()
 		fileExtension := filepath.Ext(objName)
-		//fmt.Println(fileExtension)
 		normalisedPath := filepath.ToSlash(path)
 		pathInSkipDir := contains(skipDir, normalisedPath)
 		pathInSkipFile := contains(skipFile, normalisedPath)
@@ -66,15 +67,16 @@ func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll 
 				passed++
 			} else {
 				failed++
+				//TODO: Add to errorPaths slice
 				fmt.Println(normalisedPath)
 			}
 		}
 		return nil
 	})
 	if err != nil {
-		return passed, failed, skippedDirs, skippedFiles, errors, err
+		return passed, failed, skippedDirs, skippedFiles, errors, errorPaths, err
 	}
-	return passed, failed, skippedDirs, skippedFiles, errors, nil
+	return passed, failed, skippedDirs, skippedFiles, errors, errorPaths, nil
 }
 
 // checklineEnding checks whether a given file ends with a newline

@@ -33,12 +33,13 @@ func main() {
 	}
 	fmt.Println("Fend - Check for Newline at File End\n-----\nConfig Loaded:", configLoaded,
 		"\n-----\nScan\n-----")
-	passed, failed, skippedDirs, skippedFiles, errors, err :=
+	passed, failed, skippedDirs, skippedFiles, errors, errorPaths, err :=
 		scanner.Scan(cfg.Skip.File, cfg.Skip.FileAll, cfg.Skip.Dir, cfg.Skip.DirAll, cfg.Skip.Extension, ".")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	fmt.Println("Errors:", errorPaths)
 	fmt.Println("-----\nResults\n-----")
 	fmt.Println("Passed:", passed)
 	fmt.Println("Failed:", failed)
