@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/njgibbon/fend/fend"
+	"github.com/njgibbon/fend/scanner"
 	"gopkg.in/yaml.v2"
 )
 
@@ -43,7 +43,7 @@ func main() {
 	fendConfig.Skip.FileAll = append(fendConfig.Skip.FileAll, defaultSkipFileAll...)
 	//fmt.Print(fendConfig)
 	passed, failed, skippedDirs, skippedFiles, errors, err :=
-		fend.Scan(fendConfig.Skip.File, fendConfig.Skip.FileAll, fendConfig.Skip.Dir, fendConfig.Skip.DirAll, fendConfig.Skip.Extension, ".")
+		scanner.Scan(fendConfig.Skip.File, fendConfig.Skip.FileAll, fendConfig.Skip.Dir, fendConfig.Skip.DirAll, fendConfig.Skip.Extension, ".")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
