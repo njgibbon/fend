@@ -27,8 +27,22 @@ Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 * Format output inc. errors and edge cases.
 * Define and use data structures for ScanConfig and ScanResults.
 
+# Usage
+You can use the 
+```
+go get github.com/njgibbon/fend
+# ensure binary can be foud in $PATH
+cd <dir-to-scan>
+fend
+```
+# Configuration
+TODO
+
+# GitHub Action
+TODO
+
 # Meta
-Project used as a vehicle to help learn about tool development using golang and also GitHub actions dev.
+Project used as a vehicle to help learn about basic tool development using GoLang and also to explore GitHub Actions from a development point of view as I have been having a really positive experience with them as a User.
 
 # Similar tools
 TODO: write nice things about the other tool I found.
