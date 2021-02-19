@@ -28,13 +28,15 @@ Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 * Define and use data structures for ScanConfig and ScanResults.
 
 # Usage
-You can use the 
 ```
 go get github.com/njgibbon/fend
 # ensure binary can be foud in $PATH
 cd <dir-to-scan>
 fend
 ```
+## Package
+TODO
+
 # Configuration
 TODO
 
