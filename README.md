@@ -1,6 +1,8 @@
 # fend
 Check for Newline at **F**ile **End**
 
+Fend recursively scans all files in a directory and reports those that don't end in a new line character (`\n`).
+
 TODO: Input GA Output picture.
 
 # Why might you want to do this?
