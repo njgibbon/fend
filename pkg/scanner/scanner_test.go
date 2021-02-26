@@ -13,13 +13,13 @@ func TestScan(t *testing.T) {
 	skipDirAll := []string{"skip-dir-all"}
 	skipExtension := []string{".skip", ".ignore"}
 
-	passed, failed, skippedDirs, skippedFiles, errors, errorPaths, err :=
+	passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err :=
 		Scan(skipFile, skipFileAll, skipDir, skipDirAll, skipExtension, "test/data-0")
 	if err != nil {
 		fmt.Println(err)
 		t.Errorf("Not expecting Error.")
 	} else {
-		fmt.Println(passed, failed, skippedDirs, skippedFiles, errors, errorPaths)
+		fmt.Println(passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths)
 		if passed != 5 {
 			t.Errorf("Passed: Expected 5.")
 		}
@@ -35,12 +35,12 @@ func TestScanUnknownPath(t *testing.T) {
 	skipDirAll := []string{"skip-dir-all"}
 	skipExtension := []string{".skip", ".ignore"}
 
-	passed, failed, skippedDirs, skippedFiles, errors, errorPaths, err :=
+	passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err :=
 		Scan(skipFile, skipFileAll, skipDir, skipDirAll, skipExtension, "unknown-path")
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(passed, failed, skippedDirs, skippedFiles, errors, errorPaths)
+		fmt.Println(passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths)
 		t.Errorf("Was expecting error due to unknown path to scan.")
 	}
 }
