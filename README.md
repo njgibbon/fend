@@ -29,11 +29,10 @@ Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 * GH Action release.
 ## Code
 * Finish basic testing.
-* Better algorithm for different categories.
-* Format strings everywhere.
-* Format output inc. errors and edge cases.
-* Define and use data structures for ScanConfig and ScanResults.
-* Have a look at this https://github.com/golang-standards/project-layout - particularly `cmd` and `pkg` bit.
+* Define and use data structures for ScanConfig and ScanResult.
+* Time the scan and add to results.
+* Quiet option?
+* Default skip list or add binary skips as a feature?
 
 # Usage
 ```
