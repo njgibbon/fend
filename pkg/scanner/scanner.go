@@ -71,9 +71,9 @@ func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll 
 		return nil
 	})
 	if err != nil {
-		return passed, failed, skippedDirs, skippedFiles, errors, failedPaths, errorPaths, err
+		return passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err
 	}
-	return passed, failed, skippedDirs, skippedFiles, errors, failedPaths, errorPaths, nil
+	return passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, nil
 }
 
 // checklineEnding checks whether a given file ends with a newline
