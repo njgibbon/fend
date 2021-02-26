@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/njgibbon/fend/scanner"
+	"github.com/njgibbon/fend/pkg/scanner"
 	"gopkg.in/yaml.v2"
 )
 
@@ -33,14 +33,15 @@ func main() {
 	}
 	fmt.Println("Fend - Check for Newline at File End\n-----\nConfig Loaded:", configLoaded,
 		"\n-----\nScan\n-----")
-	passed, failed, skippedDirs, skippedFiles, errors, errorPaths, err :=
+	passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err :=
 		scanner.Scan(cfg.Skip.File, cfg.Skip.FileAll, cfg.Skip.Dir, cfg.Skip.DirAll, cfg.Skip.Extension, ".")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	fmt.Println("Errors:", errorPaths)
-	fmt.Println("-----\nResults\n-----")
+	fmt.Println("Failed\n-----\n", failedPaths, "\n-----")
+	fmt.Println("Errors\n-----\n", errorPaths, "\n-----")
+	fmt.Println("Results\n-----")
 	fmt.Println("Passed:", passed)
 	fmt.Println("Failed:", failed)
 	fmt.Println("Skipped Dirs:", skippedDirs)
