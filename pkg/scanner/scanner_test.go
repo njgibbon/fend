@@ -7,20 +7,20 @@ import (
 
 // Tests are coupled with the relative test/data.. directory
 func TestScan(t *testing.T) {
-	skipFile := []string{"test/data-0/skip_file.txt"}
-	skipFileAll := []string{".", "skip_file_all.txt"}
-	skipDir := []string{"test/data-0/skip-dir"}
-	skipDirAll := []string{"skip-dir-all"}
-	skipExtension := []string{".skip", ".ignore"}
+	scanConfig := new(ScanConfig)
+	scanConfig.Skip.File = []string{"test/data-0/skip_file.txt"}
+	scanConfig.Skip.Dir = []string{"test/data-0/skip-dir"}
+	scanConfig.Skip.FileAll = []string{"skip_file_all.txt"}
+	scanConfig.Skip.DirAll = []string{"skip-dir-all"}
+	scanConfig.Skip.Extension = []string{".skip", ".ignore"}
 
-	total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err :=
-		Scan(skipFile, skipFileAll, skipDir, skipDirAll, skipExtension, "test/data-0")
+	scanResult, err := Scan(scanConfig, "test/data-0")
 	if err != nil {
 		fmt.Println(err)
 		t.Errorf("Not expecting Error.")
 	} else {
-		fmt.Println(total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths)
-		if passed != 5 {
+		fmt.Println(scanResult)
+		if scanResult.Passed != 5 {
 			t.Errorf("Passed: Expected 5.")
 		}
 
@@ -29,18 +29,18 @@ func TestScan(t *testing.T) {
 }
 
 func TestScanUnknownPath(t *testing.T) {
-	skipFile := []string{"test/data-0/skip_file.txt"}
-	skipFileAll := []string{".", "skip_file_all.txt"}
-	skipDir := []string{"test/data-0/skip-dir"}
-	skipDirAll := []string{"skip-dir-all"}
-	skipExtension := []string{".skip", ".ignore"}
+	scanConfig := new(ScanConfig)
+	scanConfig.Skip.File = []string{"test/data-0/skip_file.txt"}
+	scanConfig.Skip.Dir = []string{"test/data-0/skip-dir"}
+	scanConfig.Skip.FileAll = []string{"skip_file_all.txt"}
+	scanConfig.Skip.DirAll = []string{"skip-dir-all"}
+	scanConfig.Skip.Extension = []string{".skip", ".ignore"}
 
-	total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err :=
-		Scan(skipFile, skipFileAll, skipDir, skipDirAll, skipExtension, "unknown-path")
+	scanResult, err := Scan(scanConfig, "unknown-path")
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths)
+		fmt.Println(scanResult)
 		t.Errorf("Was expecting error due to unknown path to scan.")
 	}
 }

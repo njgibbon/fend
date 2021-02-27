@@ -7,82 +7,81 @@ import (
 
 // Scan will scan a given directory for none newline File Endings and return some stats
 // It will take into account the skip configurations passed in
-func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, int, []string, []string, error) {
-	total := 0
-	passed := 0
-	failed := 0
-	skippedFiles := 0
-	skippedDirs := 0
-	errors := 0
-	errorPaths := []string{}
-	failedPaths := []string{}
+func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
+	scanResult := new(ScanResult)
+	scanResult.Total = 0
+	scanResult.Passed = 0
+	scanResult.Failed = 0
+	scanResult.SkippedFiles = 0
+	scanResult.SkippedDirs = 0
+	scanResult.Errors = 0
 
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			total++
-			errors++
-			errorPaths = append(errorPaths, filepath.ToSlash(path))
+			scanResult.Total++
+			scanResult.Errors++
+			scanResult.ErrorPaths = append(scanResult.ErrorPaths, filepath.ToSlash(path))
 			return err
 		}
 		objName := info.Name()
 		fileExtension := filepath.Ext(objName)
 		normalisedPath := filepath.ToSlash(path)
 		if info.IsDir() {
-			pathInSkipDir := contains(skipDir, normalisedPath)
-			nameInSkipDirAll := contains(skipDirAll, objName)
+			pathInSkipDir := contains(cfg.Skip.Dir, normalisedPath)
+			nameInSkipDirAll := contains(cfg.Skip.DirAll, objName)
 			if objName == ".git" {
 				return filepath.SkipDir
 			} else if nameInSkipDirAll == true {
-				skippedDirs++
+				scanResult.SkippedDirs++
 				return filepath.SkipDir
 			} else if pathInSkipDir == true {
-				skippedDirs++
+				scanResult.SkippedDirs++
 				return filepath.SkipDir
 			} else {
 				//Move on, can't process dir but nothing special to do
 			}
 		} else {
-			pathInSkipFile := contains(skipFile, normalisedPath)
-			nameInSkipFileAll := contains(skipFileAll, objName)
-			fileExtInSkipExt := contains(skipExtension, fileExtension)
+			pathInSkipFile := contains(cfg.Skip.File, normalisedPath)
+			nameInSkipFileAll := contains(cfg.Skip.FileAll, objName)
+			fileExtInSkipExt := contains(cfg.Skip.Extension, fileExtension)
 			if objName == "." {
 				//Skip but don't record
 			} else if info.Size() == 0 {
-				total++
-				failed++
+				scanResult.Total++
+				scanResult.Failed++
 			} else if nameInSkipFileAll == true {
-				total++
-				skippedFiles++
+				scanResult.Total++
+				scanResult.SkippedFiles++
 			} else if pathInSkipFile == true {
-				total++
-				skippedFiles++
+				scanResult.Total++
+				scanResult.SkippedFiles++
 			} else if fileExtInSkipExt == true {
-				total++
-				skippedFiles++
+				scanResult.Total++
+				scanResult.SkippedFiles++
 			} else {
 				result, err := checkLineEnding(path)
 				if err != nil {
-					total++
-					errors++
-					errorPaths = append(errorPaths, normalisedPath)
+					scanResult.Total++
+					scanResult.Errors++
+					scanResult.ErrorPaths = append(scanResult.ErrorPaths, normalisedPath)
 					return err
 				}
 				if result == true {
-					total++
-					passed++
+					scanResult.Total++
+					scanResult.Passed++
 				} else {
-					total++
-					failed++
-					failedPaths = append(failedPaths, normalisedPath)
+					scanResult.Total++
+					scanResult.Failed++
+					scanResult.FailedPaths = append(scanResult.FailedPaths, normalisedPath)
 				}
 			}
 		}
 		return nil
 	})
 	if err != nil {
-		return total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err
+		return scanResult, err
 	}
-	return total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, nil
+	return scanResult, nil
 }
 
 // checklineEnding checks whether a given file ends with a newline

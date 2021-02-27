@@ -39,26 +39,27 @@ func main() {
 		if err != nil {
 			configLoaded = false
 		}
+		scanConfig := newScanConfig(cfg)
+		fmt.Println(scanConfig)
 		fmt.Println("Mode: Normal\nConfig Loaded:", configLoaded, "\n-----\nScan\n-----")
 		start := time.Now()
-		total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err :=
-			scanner.Scan(cfg.Skip.File, cfg.Skip.FileAll, cfg.Skip.Dir, cfg.Skip.DirAll, cfg.Skip.Extension, ".")
+		scanResult, err := scanner.Scan(scanConfig, ".")
 		duration := time.Since(start)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		fmt.Println("Failed\n-----\n", failedPaths, "\n-----")
-		fmt.Println("Errors\n-----\n", errorPaths, "\n-----")
+		fmt.Println("Failed\n-----\n", scanResult.FailedPaths, "\n-----")
+		fmt.Println("Errors\n-----\n", scanResult.ErrorPaths, "\n-----")
 		fmt.Println("Results\n-----")
 		fmt.Println("Time:", duration)
-		fmt.Println("Total Files Scanned:", total)
-		fmt.Println("Passed:", passed)
-		fmt.Println("Failed:", failed)
-		fmt.Println("Skipped Dirs:", skippedDirs)
-		fmt.Println("Skipped Files:", skippedFiles)
-		fmt.Println("Errors:", errors)
-		if failed != 0 {
+		fmt.Println("Total Files Scanned:", scanResult.Total)
+		fmt.Println("Passed:", scanResult.Passed)
+		fmt.Println("Failed:", scanResult.Failed)
+		fmt.Println("Skipped Dirs:", scanResult.SkippedDirs)
+		fmt.Println("Skipped Files:", scanResult.SkippedFiles)
+		fmt.Println("Errors:", scanResult.Errors)
+		if scanResult.Failed != 0 {
 			os.Exit(1)
 		}
 	}
@@ -88,4 +89,15 @@ func newConfig(configPath string) (*Config, error) {
 		return cfg, err
 	}
 	return cfg, nil
+}
+
+// newScanConfig returns the scanner Type needed for Scan using the YAML Loaded Struct
+func newScanConfig(config *Config) *scanner.ScanConfig {
+	scanConfig := new(scanner.ScanConfig)
+	scanConfig.Skip.File = config.Skip.File
+	scanConfig.Skip.Dir = config.Skip.Dir
+	scanConfig.Skip.FileAll = config.Skip.FileAll
+	scanConfig.Skip.DirAll = config.Skip.DirAll
+	scanConfig.Skip.Extension = config.Skip.Extension
+	return scanConfig
 }
