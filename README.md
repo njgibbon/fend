@@ -19,21 +19,23 @@ By enforcing this check using the GitHub Action you can automate a basic Standar
 
 Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 
+# GitHub Action
+TODO
+
 # Details
 * Fend always ignores all '.git' directories. To skip anything else see **Configuration**.
 
 # TODO
 ## Docs
-* Tests doc.
 * Readme docs.
 * GH Action release.
-* Recommend skip list.
+* Research doc with examples of binary skip configs.
 ## Code
 * Finish testing.
 * Define and use data structures for ScanConfig and ScanResult.
-* Time the scan and add to results.
-* just one type feature!
-* total and percentages on scan results.
+* Time the scan and add this to ScanResult.
+* Percentages to ScanResult and output.
+* Target mode feature.
 
 # Usage
 ```
@@ -53,9 +55,6 @@ fend doc
 TODO
 
 # Configuration
-TODO
-
-# GitHub Action
 TODO
 
 # Failed Scan Example
