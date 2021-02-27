@@ -7,7 +7,8 @@ import (
 
 // Scan will scan a given directory for none newline File Endings and return some stats
 // It will take into account the skip configurations passed in
-func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, []string, []string, error) {
+func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll []string, skipExtension []string, checkDir string) (int, int, int, int, int, int, []string, []string, error) {
+	total := 0
 	passed := 0
 	failed := 0
 	skippedFiles := 0
@@ -18,6 +19,7 @@ func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll 
 
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
+			total++
 			errors++
 			errorPaths = append(errorPaths, filepath.ToSlash(path))
 			return err
@@ -46,23 +48,30 @@ func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll 
 			if objName == "." {
 				//Skip but don't record
 			} else if info.Size() == 0 {
+				total++
 				failed++
 			} else if nameInSkipFileAll == true {
+				total++
 				skippedFiles++
 			} else if pathInSkipFile == true {
+				total++
 				skippedFiles++
 			} else if fileExtInSkipExt == true {
+				total++
 				skippedFiles++
 			} else {
 				result, err := checkLineEnding(path)
 				if err != nil {
+					total++
 					errors++
 					errorPaths = append(errorPaths, normalisedPath)
 					return err
 				}
 				if result == true {
+					total++
 					passed++
 				} else {
+					total++
 					failed++
 					failedPaths = append(failedPaths, normalisedPath)
 				}
@@ -71,9 +80,9 @@ func Scan(skipFile []string, skipFileAll []string, skipDir []string, skipDirAll 
 		return nil
 	})
 	if err != nil {
-		return passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err
+		return total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, err
 	}
-	return passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, nil
+	return total, passed, failed, skippedDirs, skippedFiles, errors, errorPaths, failedPaths, nil
 }
 
 // checklineEnding checks whether a given file ends with a newline
