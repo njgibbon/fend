@@ -25,14 +25,15 @@ Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 # TODO
 ## Docs
 * Tests doc.
-* Readme docs. release.
+* Readme docs.
 * GH Action release.
+* Recommend skip list.
 ## Code
-* Finish basic testing.
+* Finish testing.
 * Define and use data structures for ScanConfig and ScanResult.
 * Time the scan and add to results.
-* Quiet option?
-* Default skip list or add binary skips as a feature?
+* just one type feature!
+* total and percentages on scan results.
 
 # Usage
 ```
