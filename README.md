@@ -22,7 +22,7 @@ Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 # GitHub Action
 See [.github/workflows/fend.yaml](.github/workflows/fend.yaml) as the Action is run on this repository!
 
-See **Configuration** for additonal options.
+See [Configuration](#Configuration) for additonal options.
 ```
 jobs:
   fend:
@@ -37,7 +37,7 @@ jobs:
 TODO
 
 # Details
-* Fend always ignores all '.git' directories. To skip anything else see **Configuration**. You will want to configure the tool to skip any binary file types found in your repository - like any images for instance.
+* Fend always ignores all '.git' directories. To skip anything else see [Configuration](#Configuration). You will want to configure the tool to skip any binary file types found in your repository - like any images for instance.
 
 # TODO
 ## Docs
