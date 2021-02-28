@@ -31,10 +31,13 @@ jobs:
     - uses: actions/checkout@master
     - uses: njgibbon/fend@main
 ```
-**That's all!**
+**That's all!** :dizzy:
+
+# Research
+TODO
 
 # Details
-* Fend always ignores all '.git' directories. To skip anything else see **Configuration**.
+* Fend always ignores all '.git' directories. To skip anything else see **Configuration**. You will want to configure the tool to skip any binary file types found in your repository - like any images for instance.
 
 # TODO
 ## Docs
@@ -66,8 +69,23 @@ See [cmd/fend/main.go](cmd/fend/main.go) and [pkg/scanner/scanner_test.go](pkg/s
 # Configuration
 Place a file called `.fend.yaml` in the working directory to configure your scan. See [.fend.yaml](.fend.yaml) for the configuration used for the fend GitHub Action on *this* repository.
 ```
-TODO
+skip:
+  file: 
+    - skip_file.txt
+  file_all: 
+    - skip_file_all.txt
+  dir:
+    - skip-dir
+  dir_all:
+    - skip-dir-all
+  extension: 
+    - .skip
+    - .ignore
 ```
+* You can skip specific files or directories by providing the full path.
+* You can skipp all instances of a file or directory.
+* You can skip all files with certain extensions.
+The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research.md](doc/research.md) for some examples of how you can quickly configure the right skips - even for large and interesting repos.
 
 # Failed Scan Example
 TODO: Image
@@ -76,4 +94,4 @@ TODO: Image
 Project used as a vehicle to help learn some of the basics of tool development using GoLang and also to explore GitHub Actions from a development point of view as I have had a really positive experience with GA as a User.
 
 # Similar tools
-TODO: write nice things about the other tool I found.
+TODO
