@@ -20,7 +20,7 @@ By enforcing this check using the GitHub Action you can automate a basic Standar
 Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 
 # GitHub Action
-See [.github/workflows/fend.yaml](.github/workflows/fend.yaml) as the Action is run on this repo!
+See [.github/workflows/fend.yaml](.github/workflows/fend.yaml) as the Action is run on this repository!
 
 See **Configuration** for additonal options.
 ```
@@ -31,6 +31,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: njgibbon/fend@main
 ```
+**That's all!**
 
 # Details
 * Fend always ignores all '.git' directories. To skip anything else see **Configuration**.
