@@ -1,6 +1,6 @@
 package scanner
 
-//ScanConfig is this
+//ScanConfig to pass in scan confguration
 type ScanConfig struct {
 	Skip struct {
 		File      []string

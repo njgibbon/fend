@@ -31,11 +31,9 @@ TODO
 * GH Action release.
 * Research doc with examples of binary skip configs.
 ## Code
-* Finish testing.
-* Define and use data structures for ScanConfig and ScanResult.
-* Time the scan and add this to ScanResult.
-* Percentages to ScanResult and output.
-* Target mode feature.
+* File extensions output feature.
+* Finish basic testing.
+* Any cleaning.
 
 # Usage
 ```

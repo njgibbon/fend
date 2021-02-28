@@ -3,6 +3,7 @@ package scanner
 import (
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // Scan will scan a given directory for none newline File Endings and return some stats
@@ -15,6 +16,7 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 	scanResult.SkippedFiles = 0
 	scanResult.SkippedDirs = 0
 	scanResult.Errors = 0
+	startTime := time.Now()
 
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -49,14 +51,15 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 			} else if info.Size() == 0 {
 				scanResult.Total++
 				scanResult.Failed++
+				scanResult.FailedPaths = append(scanResult.FailedPaths, normalisedPath)
 			} else if nameInSkipFileAll == true {
-				scanResult.Total++
+				//scanResult.Total++
 				scanResult.SkippedFiles++
 			} else if pathInSkipFile == true {
-				scanResult.Total++
+				//scanResult.Total++
 				scanResult.SkippedFiles++
 			} else if fileExtInSkipExt == true {
-				scanResult.Total++
+				//scanResult.Total++
 				scanResult.SkippedFiles++
 			} else {
 				result, err := checkLineEnding(path)
@@ -78,6 +81,7 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 		}
 		return nil
 	})
+	scanResult.Time = time.Since(startTime)
 	if err != nil {
 		return scanResult, err
 	}
