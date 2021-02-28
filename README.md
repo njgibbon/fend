@@ -85,7 +85,7 @@ skip:
 * You can skip specific files or directories by providing the full path.
 * You can skipp all instances of a file or directory.
 * You can skip all files with certain extensions.
-The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research.md](doc/research.md) for some examples of how you can quickly configure the right skips - even for large and interesting repos.
+The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research.md](doc/research.md) for some examples of how you can quickly configure the right skips - even for quite large repositories.
 
 # Failed Scan Example
 TODO: Image
