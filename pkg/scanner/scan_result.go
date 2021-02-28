@@ -2,36 +2,39 @@ package scanner
 
 import (
 	"fmt"
-	"strings"
 	"time"
 )
 
 //ScanResult to return results from Scan
 type ScanResult struct {
-	Time         time.Duration
-	Total        int
-	Passed       int
-	Failed       int
-	SkippedDirs  int
-	SkippedFiles int
-	Errors       int
-	ErrorPaths   []string
-	FailedPaths  []string
+	Time               time.Duration
+	Total              int
+	Passed             int
+	Failed             int
+	SkippedDirs        int
+	SkippedFiles       int
+	Errors             int
+	ErrorPaths         []string
+	FailedPaths        []string
+	FailedExtensionSet map[string]bool
 }
 
-//Output prints the results
+//Output formats all of the results
 func (sr ScanResult) Output() string {
-	failedPaths := strings.Join(sr.FailedPaths, ", ")
-	errorPaths := strings.Join(sr.ErrorPaths, ", ")
+	failedExtensionSet := []string{}
+	for key := range sr.FailedExtensionSet {
+		failedExtensionSet = append(failedExtensionSet, key)
+	}
 	resultsPart := "Results\n-----\n"
 	failedPart := ""
 	errorPart := ""
 	output := resultsPart
 	if len(sr.FailedPaths) != 0 {
-		failedPart = "Failed\n-----\n[ " + failedPaths + " ]\n-----\n"
+		failedPart = "Failed\n-----\n" + fmt.Sprint(sr.FailedPaths) + "\n-----\n" +
+			fmt.Sprint(failedExtensionSet) + "\n-----\n"
 	}
 	if len(sr.ErrorPaths) != 0 {
-		errorPart = "Errors\n-----\n[ " + errorPaths + " ]\n-----\n"
+		errorPart = "Errors\n-----\n[ " + fmt.Sprint(sr.ErrorPaths) + " ]\n-----\n"
 	}
 	statsPart := "Stats\n-----\nTime: " + fmt.Sprint(sr.Time) +
 		"\nTotal Files Scanned: " + fmt.Sprint(sr.Total) +

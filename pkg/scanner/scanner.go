@@ -16,6 +16,7 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 	scanResult.SkippedFiles = 0
 	scanResult.SkippedDirs = 0
 	scanResult.Errors = 0
+	scanResult.FailedExtensionSet = make(map[string]bool)
 	startTime := time.Now()
 
 	err := filepath.Walk(checkDir, func(path string, info os.FileInfo, err error) error {
@@ -27,6 +28,9 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 		}
 		objName := info.Name()
 		fileExtension := filepath.Ext(objName)
+		if fileExtension == "" {
+			fileExtension = objName
+		}
 		normalisedPath := filepath.ToSlash(path)
 		if info.IsDir() {
 			pathInSkipDir := contains(cfg.Skip.Dir, normalisedPath)
@@ -52,14 +56,12 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 				scanResult.Total++
 				scanResult.Failed++
 				scanResult.FailedPaths = append(scanResult.FailedPaths, normalisedPath)
+				scanResult.FailedExtensionSet[fileExtension] = true
 			} else if nameInSkipFileAll == true {
-				//scanResult.Total++
 				scanResult.SkippedFiles++
 			} else if pathInSkipFile == true {
-				//scanResult.Total++
 				scanResult.SkippedFiles++
 			} else if fileExtInSkipExt == true {
-				//scanResult.Total++
 				scanResult.SkippedFiles++
 			} else {
 				result, err := checkLineEnding(path)
@@ -76,6 +78,7 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 					scanResult.Total++
 					scanResult.Failed++
 					scanResult.FailedPaths = append(scanResult.FailedPaths, normalisedPath)
+					scanResult.FailedExtensionSet[fileExtension] = true
 				}
 			}
 		}

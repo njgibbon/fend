@@ -31,13 +31,12 @@ TODO
 * GH Action release.
 * Research doc with examples of binary skip configs.
 ## Code
-* File extensions output feature.
 * Finish basic testing.
 * Any cleaning.
 
 # Usage
 ```
-go get github.com/njgibbon/fend
+go get -u github.com/njgibbon/fend/cmd/fend
 # ensure binary can be foud in $PATH
 cd <dir-to-scan>
 fend

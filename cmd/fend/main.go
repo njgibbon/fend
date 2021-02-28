@@ -34,7 +34,7 @@ func main() {
 	}
 	scanConfig := newScanConfig(cfg)
 	fmt.Println("Settings\n-----\nConfig Loaded:", configLoaded, "\n-----")
-	fmt.Println("Scan...\n-----")
+	fmt.Println("Scan\n-----")
 	scanResult, err := scanner.Scan(scanConfig, ".")
 	if err != nil {
 		fmt.Println(err)
