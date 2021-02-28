@@ -20,7 +20,17 @@ By enforcing this check using the GitHub Action you can automate a basic Standar
 Consistent is clean. Clean is good. Don't overthink it. :ok_hand:
 
 # GitHub Action
-TODO
+See [.github/workflows/fend.yaml](.github/workflows/fend.yaml) as the Action is run on this repo!
+
+See **Configuration** for additonal options.
+```
+jobs:
+  fend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: njgibbon/fend@main
+```
 
 # Details
 * Fend always ignores all '.git' directories. To skip anything else see **Configuration**.
@@ -49,10 +59,14 @@ fend version
 fend doc
 ```
 ## Package
-TODO
+The scanner component can easily be used as a package. 
+See [cmd/fend/main.go](cmd/fend/main.go) and [pkg/scanner/scanner_test.go](pkg/scanner/scanner_test.go) for usage examples.
 
 # Configuration
+Place a file called `.fend.yaml` in the working directory to configure your scan. See [.fend.yaml](.fend.yaml) for the configuration used for the fend GitHub Action on *this* repository.
+```
 TODO
+```
 
 # Failed Scan Example
 TODO: Image
