@@ -69,7 +69,6 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 					scanResult.Total++
 					scanResult.Errors++
 					scanResult.ErrorPaths = append(scanResult.ErrorPaths, normalisedPath)
-					return err
 				}
 				if result == true {
 					scanResult.Total++
