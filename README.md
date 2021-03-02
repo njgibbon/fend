@@ -13,7 +13,7 @@ https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newl
 
 It will mean no more GitHub warnings for 'No newline at EOF' on Pull Request.
 
-TODO: Image
+![GitHub EOF No Newline at EOF Warning](images/github-no-newline-eof-warn.png)
 
 By enforcing this check using the GitHub Action you can automate a basic Standard in your project.
 
