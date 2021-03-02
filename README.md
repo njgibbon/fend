@@ -3,7 +3,7 @@ Check for Newline at **F**ile **End**
 
 Fend recursively scans all files in a directory and reports those that don't end in a new line character (`\n`).
 
-TODO: Input GA Output picture.
+![Fend Passed](images/fend-passed.png)
 
 # Why might you want to do this?
 
@@ -37,7 +37,7 @@ jobs:
 TODO
 
 # Details
-* Fend always ignores all '.git' directories. To skip anything else see [Configuration](#Configuration). You will want to configure the tool to skip any binary file types found in your repository - like any images for instance.
+* Fend always ignores all '.git' directories and none-regular files like symlinks. To skip anything else see [Configuration](#Configuration). You will want to configure the tool to skip any binary file types found in your repository - like any images for instance.
 
 # TODO
 ## Docs
@@ -88,7 +88,7 @@ skip:
 The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research.md](doc/research.md) for some examples of how you can quickly configure the right skips - even for quite large repositories.
 
 # Failed Scan Example
-TODO: Image
+![Fend Failed](images/fend-failed.png)
 
 # Meta
 Project used as a vehicle to help learn some of the basics of tool development using GoLang and also to explore GitHub Actions from a development point of view as I have had a really positive experience with GA as a User.
