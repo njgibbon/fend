@@ -52,25 +52,24 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 			fileExtInSkipExt := contains(cfg.Skip.Extension, fileExtension)
 			if objName == "." {
 				//Skip but don't record
-			} else if info.Size() == 0 {
-				scanResult.Total++
-				scanResult.Failed++
-				scanResult.FailedPaths = append(scanResult.FailedPaths, normalisedPath)
-				scanResult.FailedExtensionSet[fileExtension] = true
 			} else if nameInSkipFileAll == true {
 				scanResult.SkippedFiles++
 			} else if pathInSkipFile == true {
 				scanResult.SkippedFiles++
 			} else if fileExtInSkipExt == true {
 				scanResult.SkippedFiles++
+			} else if info.Size() == 0 {
+				scanResult.Total++
+				scanResult.Failed++
+				scanResult.FailedPaths = append(scanResult.FailedPaths, normalisedPath)
+				scanResult.FailedExtensionSet[fileExtension] = true
 			} else {
 				result, err := checkLineEnding(path)
 				if err != nil {
 					scanResult.Total++
 					scanResult.Errors++
 					scanResult.ErrorPaths = append(scanResult.ErrorPaths, normalisedPath)
-				}
-				if result == true {
+				} else if result == true {
 					scanResult.Total++
 					scanResult.Passed++
 				} else {

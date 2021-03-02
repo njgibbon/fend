@@ -34,13 +34,13 @@ func (sr ScanResult) Output() string {
 			fmt.Sprint(failedExtensionSet) + "\n-----\n"
 	}
 	if len(sr.ErrorPaths) != 0 {
-		errorPart = "Errors\n-----\n[ " + fmt.Sprint(sr.ErrorPaths) + " ]\n-----\n"
+		errorPart = "Errors\n-----\n" + fmt.Sprint(sr.ErrorPaths) + "\n-----\n"
 	}
 	statsPart := "Stats\n-----\nTime: " + fmt.Sprint(sr.Time) +
 		"\nTotal Files Scanned: " + fmt.Sprint(sr.Total) +
 		"\nPassed: " + fmt.Sprint(sr.Passed) + " - (" + fmt.Sprintf("%.2f", sr.passedPercent()) + "%)" +
 		"\nFailed: " + fmt.Sprint(sr.Failed) + " - (" + fmt.Sprintf("%.2f", sr.failedPercent()) + "%)" +
-		"\nSkipped Dirs: " + fmt.Sprint(sr.SkippedFiles) +
+		"\nSkipped Dirs: " + fmt.Sprint(sr.SkippedDirs) +
 		"\nSkipped Files: " + fmt.Sprint(sr.SkippedFiles) +
 		"\nErrors: " + fmt.Sprint(sr.Errors) + " - (" + fmt.Sprintf("%.2f", sr.errorPercent()) + "%)"
 	output = resultsPart + failedPart + errorPart + statsPart
