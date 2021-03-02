@@ -11,7 +11,7 @@ import (
 
 // Constants for Fend
 const (
-	Version    = "dev"
+	Version    = "test"
 	Source     = "https://github.com/njgibbon/fend"
 	ConfigPath = ".fend.yaml"
 )
