@@ -83,7 +83,7 @@ skip:
     - .ignore
 ```
 * You can skip specific files or directories by providing the full path.
-* You can skipp all instances of a file or directory.
+* You can skip all instances of a file or directory.
 * You can skip all files with certain extensions.
 The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research.md](doc/research.md) for some examples of how you can quickly configure the right skips - even for quite large repositories.
 
@@ -94,4 +94,4 @@ TODO: Image
 Project used as a vehicle to help learn some of the basics of tool development using GoLang and also to explore GitHub Actions from a development point of view as I have had a really positive experience with GA as a User.
 
 # Similar tools
-TODO
+* https://github.com/fernandrone/linelint
