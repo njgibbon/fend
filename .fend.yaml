@@ -6,7 +6,7 @@ skip:
   dir:
     - skip-dir
   dir_all:
-    - skip-dir-all
+    - images
     - test
   extension: 
     - .skip
