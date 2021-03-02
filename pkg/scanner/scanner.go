@@ -46,7 +46,7 @@ func Scan(cfg *ScanConfig, checkDir string) (*ScanResult, error) {
 			} else {
 				//Move on, can't process dir but nothing special to do
 			}
-		} else {
+		} else if info.Mode().IsRegular() {
 			pathInSkipFile := contains(cfg.Skip.File, normalisedPath)
 			nameInSkipFileAll := contains(cfg.Skip.FileAll, objName)
 			fileExtInSkipExt := contains(cfg.Skip.Extension, fileExtension)
