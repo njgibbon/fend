@@ -1,8 +1,9 @@
 name: 'Fend-Action'
 description: 'Check for Newline at File End'
 author: 'Nick Gibbon'
-icon: bell
-color: gray-dark
+branding:
+  icon: 'bell'
+  color: 'gray-dark'
 runs:
   using: 'docker'
   image: 'Dockerfile'
