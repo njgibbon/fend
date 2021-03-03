@@ -1,4 +1,4 @@
-name: 'Fend'
+name: 'Fend-Action'
 description: 'Check for Newline at File End'
 author: 'Nick Gibbon'
 runs:
