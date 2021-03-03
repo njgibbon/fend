@@ -48,7 +48,8 @@ Running Fend on some well known repositories and recording the results!
 # Usage
 ```
 go get -u github.com/njgibbon/fend/cmd/fend
-# ensure binary can be foud in $PATH
+# ensure binary can be found in $PATH e.g
+# mv ~/go/bin/fend ~/my/bin
 cd <dir-to-scan>
 fend
 ```
@@ -88,7 +89,7 @@ The Failure Extensions Feature can be used to help you configure a good skip lis
 ![Fend Failed](images/fend-failed.png)
 
 # Meta
-Project used as a vehicle to help learn some of the basics of tool development using GoLang and also to explore GitHub Actions from a development point of view as I have had a really positive experience with GA as a User.
+Project used as a vehicle to help learn some of the basics of tool development using Go and also to explore GitHub Actions from a development point of view as I have had a really positive experience with GitHub Actions from the user perspective.
 
 # Similar tools
 * https://github.com/fernandrone/linelint
