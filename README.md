@@ -7,7 +7,7 @@ Fend recursively scans all files in a directory and reports those that don't end
 
 # Why might you want to do this?
 
-It is a POSIX Standard that you *should*, *arguably* adhere.
+It is a POSIX Standard that you *should*, *arguably* adhere to.
 
 This StackOverflow post captures the *why?* better than I could:
 
