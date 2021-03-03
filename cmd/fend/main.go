@@ -33,7 +33,7 @@ func main() {
 		configLoaded = false
 	}
 	scanConfig := newScanConfig(cfg)
-	fmt.Println("Settings\n-----\nConfig Loaded:", configLoaded, "\n-----\nScan\n-----")
+	fmt.Println("Settings\n-----\nConfig:", configLoaded, "\n-----\nScan\n-----")
 	scanResult, err := scanner.Scan(scanConfig, ".")
 	if err != nil {
 		fmt.Println("Error:", err)

@@ -38,7 +38,7 @@ jobs:
 # Research
 Running Fend on some well known repositories and recording the results!
 
-[doc/research/readme.md](doc/research/readme.md).
+[docs/research/readme.md](docs/research/readme.md).
 
 # Details
 * Fend always ignores all '.git' directories and non-regular files like symlinks. 
@@ -82,7 +82,7 @@ skip:
 * You can skip specific files or directories by providing the full path.
 * You can skip all instances of a file or directory.
 * You can skip all files with certain extensions.
-The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research/readme.md](doc/research/readme.md) for some examples of how you can quickly configure the right skips - even for quite large repositories.
+The Failure Extensions Feature can be used to help you configure a good skip list. See [docs/research/checkov/readme.md](docs/research/checkov/readme.md) for an example of how you can quickly configure the right skips.
 
 # Failed Scan Example
 ![Fend Failed](images/fend-failed.png)

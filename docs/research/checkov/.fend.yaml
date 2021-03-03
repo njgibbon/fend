@@ -1,0 +1,5 @@
+skip:
+  extension:
+    - .png
+    - .gif
+    - .svg
