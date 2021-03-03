@@ -52,11 +52,11 @@ func TestScanData1(t *testing.T) {
 	} else {
 		fmt.Println(scanResult)
 		fmt.Println(scanResult.Output())
-		if scanResult.Total != 0 {
-			t.Errorf("Total: Expected 0.")
+		if scanResult.Total != 1 {
+			t.Errorf("Total: Expected 1.")
 		}
-		if scanResult.Passed != 0 {
-			t.Errorf("Passed: Expected 0.")
+		if scanResult.Passed != 1 {
+			t.Errorf("Passed: Expected 1.")
 		}
 		if scanResult.Failed != 0 {
 			t.Errorf("Failed: Expected 0.")
