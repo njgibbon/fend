@@ -7,6 +7,8 @@ Fend recursively scans all files in a directory and reports those that don't end
 
 # Why might you want to do this?
 
+It is a POSIX Standard that you *should*, *arguably* adhere.
+
 This StackOverflow post captures the *why?* better than I could:
 
 https://stackoverflow.com/questions/729692/why-should-text-files-end-with-a-newline
@@ -34,19 +36,14 @@ jobs:
 **That's all!** :dizzy:
 
 # Research
-TODO
+Running Fend on some well known repositories and recording the results!
+
+[doc/research/readme.md](doc/research/readme.md).
 
 # Details
-* Fend always ignores all '.git' directories and none-regular files like symlinks. To skip anything else see [Configuration](#Configuration). You will want to configure the tool to skip any binary file types found in your repository - like any images for instance.
+* Fend always ignores all '.git' directories and non-regular files like symlinks. 
+* To skip anything else see [Configuration](#Configuration). You will want to configure the tool to skip any binary file types found in your repository - like any images for instance.
 
-# TODO
-## Docs
-* Readme docs.
-* GH Action release.
-* Research doc with examples of binary skip configs.
-## Code
-* Finish basic testing.
-* Any cleaning.
 
 # Usage
 ```
@@ -85,7 +82,7 @@ skip:
 * You can skip specific files or directories by providing the full path.
 * You can skip all instances of a file or directory.
 * You can skip all files with certain extensions.
-The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research.md](doc/research.md) for some examples of how you can quickly configure the right skips - even for quite large repositories.
+The Failure Extensions Feature can be used to help you configure a good skip list. See [doc/research/readme.md](doc/research/readme.md) for some examples of how you can quickly configure the right skips - even for quite large repositories.
 
 # Failed Scan Example
 ![Fend Failed](images/fend-failed.png)

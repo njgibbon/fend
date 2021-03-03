@@ -10,4 +10,3 @@
 * Not trying to implement a *fix* feature. Just reading and informing.
 * Not splitting main into 'internal' package. Should be minimal and easily verified through exploratory usage.
 * Always skip non-regular files like symlinks.
-* ...
