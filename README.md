@@ -28,6 +28,7 @@ See [Configuration](#Configuration) for additonal options.
 ```
 jobs:
   fend:
+    name: Fend
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
